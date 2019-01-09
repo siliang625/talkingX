@@ -1,1 +1,1 @@
-# talkingX
+# talkingX: chatbot service 
