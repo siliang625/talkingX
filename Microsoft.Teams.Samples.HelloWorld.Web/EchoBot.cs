@@ -9,8 +9,18 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
     {
         public static async Task EchoMessage(ConnectorClient connector, Activity activity)
         {
-            var reply = activity.CreateReply("I don't understand you.");
+            var responseString = "not a question!";
+            if (activity.GetTextWithoutMentions() == "")
+                responseString = QuestionHandler("what is money?");
+
+            var reply = activity.CreateReply(responseString);
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+        }
+
+        public static string QuestionHandler(string questionText)
+        {
+            // search knowledge
+            return "";
         }
     }
 }
