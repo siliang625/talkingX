@@ -9,7 +9,7 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
     {
         public static async Task EchoMessage(ConnectorClient connector, Activity activity)
         {
-            var reply = activity.CreateReply("You said: " + activity.GetTextWithoutMentions());
+            var reply = activity.CreateReply("I don't understand you.");
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
     }

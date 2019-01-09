@@ -12,6 +12,9 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
         public static ComposeExtensionResponse HandleMessageExtensionQuery(ConnectorClient connector, Activity activity)
         {
             var query = activity.GetComposeExtensionQueryData();
+
+            Console.WriteLine(query);
+
             if (query == null || query.CommandId != "getRandomText")
             {
                 // We only process the 'getRandomText' queries with this message extension
@@ -33,6 +36,8 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
 
             var response = new ComposeExtensionResponse(new ComposeExtensionResult("list", "result"));
             response.ComposeExtension.Attachments = attachments.ToList();
+
+            Console.WriteLine(response);
 
             return response;
         }
