@@ -1,0 +1,10 @@
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/bin/Debug/netcoreapp2.1/AlohaHacksSentiment.deps.json
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/bin/Debug/netcoreapp2.1/AlohaHacksSentiment.runtimeconfig.json
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/bin/Debug/netcoreapp2.1/AlohaHacksSentiment.runtimeconfig.dev.json
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/bin/Debug/netcoreapp2.1/AlohaHacksSentiment.dll
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/bin/Debug/netcoreapp2.1/AlohaHacksSentiment.pdb
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/obj/Debug/netcoreapp2.1/AlohaHacksSentiment.csproj.CoreCompileInputs.cache
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/obj/Debug/netcoreapp2.1/AlohaHacksSentiment.AssemblyInfoInputs.cache
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/obj/Debug/netcoreapp2.1/AlohaHacksSentiment.AssemblyInfo.cs
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/obj/Debug/netcoreapp2.1/AlohaHacksSentiment.dll
+/Users/simeonivanov/Documents/alohahacks/talkingX/AlohaHacksSentiment/obj/Debug/netcoreapp2.1/AlohaHacksSentiment.pdb
