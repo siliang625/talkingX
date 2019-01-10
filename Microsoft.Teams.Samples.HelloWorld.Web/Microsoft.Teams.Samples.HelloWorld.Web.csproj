@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="MessageExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrackSentiment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\msteams-16.css" />

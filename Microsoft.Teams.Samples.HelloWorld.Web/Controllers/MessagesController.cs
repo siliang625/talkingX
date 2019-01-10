@@ -13,6 +13,10 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        static double score = 0.0;
+        static int count = 0;
+        Random random = new Random();
+
         [HttpPost]
         public async Task<HttpResponseMessage> Post([FromBody] Activity activity)
         {
@@ -25,12 +29,23 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
                         ? Request.CreateResponse<ComposeExtensionResponse>(response)
                         : new HttpResponseMessage(HttpStatusCode.OK);
                 }
-                else
+                else if (activity.GetTextWithoutMentions().ToLower().Trim() == "how happy am i?")
                 {
-                    await EchoBot.EchoMessage(connector, activity);
+                    await EchoBot.EchoMessage(connector, activity, score/count);
                     return new HttpResponseMessage(HttpStatusCode.Accepted);
                 }
+                else
+                {
+                    score += TempSentiment(activity.GetTextWithoutMentions());
+                    count++;
+                    return new HttpResponseMessage(HttpStatusCode.OK);
+                }
             }
+        }
+
+        public double TempSentiment(string message)
+        {
+            return random.NextDouble();
         }
     }
 }
