@@ -48,4 +48,34 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
             return random.NextDouble();
         }
     }
+
+    class RecentScore
+    {
+        double [] recentScores;
+        int index;
+        double totalScore;
+        int size;
+        public RecentScore(int size)
+        {
+            recentScores = new Double[size];
+            index = 0;
+            totalScore = 0.0;
+            size = 0;
+        }
+
+        public void update(double nscore)
+        {
+            totalScore -= recentScores[index];
+            recentScores[index] = nscore;
+            totalScore += nscore;
+            index++;
+
+            if (size < 20) size++;
+        }
+
+        public double GetScore()
+        {
+            return totalScore / size;
+        }
+    }
 }

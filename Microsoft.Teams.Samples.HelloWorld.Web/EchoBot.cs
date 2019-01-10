@@ -13,6 +13,10 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
 
             var reply = activity.CreateReply(responseString);
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+
+            /*
+             
+             */
         }
 
         public static string QuestionHandler(string questionText)
