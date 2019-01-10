@@ -8,14 +8,16 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using Microsoft.Bot.Connector.Teams.Models;
 
+using SentimentSample;
+
 namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
-        static double score = 0.0;
-        static int count = 0;
-        Random random = new Random();
+        static Random random = new Random();
+
+        static ScoreTracker tracker = new ScoreTracker(10); // keeps track of the last 10 messages
 
         [HttpPost]
         public async Task<HttpResponseMessage> Post([FromBody] Activity activity)
@@ -29,15 +31,14 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
                         ? Request.CreateResponse<ComposeExtensionResponse>(response)
                         : new HttpResponseMessage(HttpStatusCode.OK);
                 }
-                else if (activity.GetTextWithoutMentions().ToLower().Trim() == "how happy am i?")
+                else if (activity.GetTextWithoutMentions().ToLower().Trim() == "score")
                 {
-                    await EchoBot.EchoMessage(connector, activity, score/count);
+                    await EchoBot.EchoMessage(connector, activity, tracker.GetScore());
                     return new HttpResponseMessage(HttpStatusCode.Accepted);
                 }
                 else
                 {
-                    score += TempSentiment(activity.GetTextWithoutMentions());
-                    count++;
+                    tracker.update(TempSentiment(activity.GetTextWithoutMentions()));
                     return new HttpResponseMessage(HttpStatusCode.OK);
                 }
             }
@@ -45,37 +46,50 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
 
         public double TempSentiment(string message)
         {
-            return random.NextDouble();
+            return SentimentSample.SentimentAnalysis.CalculateSentiment(message);
         }
     }
 
-    class RecentScore
+    class ScoreTracker
     {
         double [] recentScores;
         int index;
         double totalScore;
         int size;
-        public RecentScore(int size)
+        int total_size;
+
+        public ScoreTracker(int total_size)
         {
-            recentScores = new Double[size];
+            recentScores = new Double[total_size];
             index = 0;
             totalScore = 0.0;
             size = 0;
+            this.total_size = total_size;
         }
 
         public void update(double nscore)
         {
-            totalScore -= recentScores[index];
             recentScores[index] = nscore;
-            totalScore += nscore;
             index++;
 
-            if (size < 20) size++;
+            if (this.size < this.total_size) this.size++;
+            var b = 0;
         }
 
         public double GetScore()
         {
-            return totalScore / size;
+            var coeff = 1.5;
+            var score = 0.0;
+            var totalWeight = 0.0;
+            for (int i = 0; i < this.size; i++)
+            {
+                int j = (index - 1 - i) % this.size;
+                score += recentScores[j] * coeff;
+                totalWeight += coeff;
+                coeff /= 1.5;
+            }
+            if (totalWeight == 0) return 0.5;
+            return score / totalWeight;
         }
     }
 }
