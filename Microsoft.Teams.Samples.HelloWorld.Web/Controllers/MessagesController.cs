@@ -33,28 +33,24 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
                 }
                 else if (activity.GetTextWithoutMentions().ToLower().Trim() == "score")
                 {
-                    await EchoBot.EchoMessage(connector, activity, tracker.GetScore());
+                    await connector.Conversations.ReplyToActivityWithRetriesAsync(activity.CreateReply(tracker.GetScore().ToString()));
                     return new HttpResponseMessage(HttpStatusCode.Accepted);
                 }
                 else
                 {
-                    tracker.update(TempSentiment(activity.GetTextWithoutMentions()));
+
+                    //if (tracker.GetScore() < 0.4) await EchoBot.SendMessage(connector, activity, "Cheer up buddy!");
+                    await EchoBot.EchoMessage(connector, activity, tracker.GetScore(), tracker);
                     return new HttpResponseMessage(HttpStatusCode.OK);
                 }
             }
         }
-
-        public double TempSentiment(string message)
-        {
-            return SentimentSample.SentimentAnalysis.CalculateSentiment(message);
-        }
     }
 
-    class ScoreTracker
+    public class ScoreTracker
     {
         double [] recentScores;
         int index;
-        double totalScore;
         int size;
         int total_size;
 
@@ -62,7 +58,6 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web.Controllers
         {
             recentScores = new Double[total_size];
             index = 0;
-            totalScore = 0.0;
             size = 0;
             this.total_size = total_size;
         }
