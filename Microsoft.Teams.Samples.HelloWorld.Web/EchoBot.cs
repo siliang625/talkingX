@@ -62,15 +62,26 @@ namespace Microsoft.Teams.Samples.HelloWorld.Web
                                 else
                                     responseString = "Vancouver BC (During aloha hacks) :D";
                                 break;
+
+                            case "AskedForMovie":
+                                if (score < 0.4)
+                                    responseString = "You should watch a happy movie like the new spiderman!";
+                                else if (score < 0.6)
+                                    responseString = "you should watch just a normal movie, like Game of Thrones";
+                                else
+                                    responseString = "You're too happy!! watch something sad like Black Mirror";
+                                break;
+
+
                             default:
                                 tracker.update(TempSentiment(activity.GetTextWithoutMentions()));
                                 score = tracker.GetScore();
                                 if (score > 0.3 && score < 0.5)
                                     responseString = "Are u alright buddy?";
                                 else if (score <= 0.3)
-                                    responseString = "You recent activities make me believe you are not in a good mood, let me tell you a joke!" + "\n" + TellJoke();
+                                    responseString = "You sound like you are in a bad mood uwu, let me tell you a joke!" + "\n" + TellJoke();
                                 else
-                                    responseString = "Well, I have absorbed all you just said!";
+                                    responseString = "Great!";
                                 break;
 
                         }
